@@ -1,13 +1,20 @@
 package tictactoe;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 //        String gameInput = scanner.nextLine();
-        String gameInput = "XXXOOOXXX";
+//        String gameInput = "XXXOOOXXX";
+//        String gameInput = "XXXOO__O_";
+//        String gameInput = "XOXOXOXXO";
+//        String gameInput = "XOOOXOXXO";
+//        String gameInput = "XOXOOXXXO";
+//        String gameInput = "XO_OOX_X_";
+//        String gameInput = "XO_XO_XOX";
+//        String gameInput = "_O_X__X_X";
+        String gameInput = "_OOOO_X_X";
         scanner.close();
 
         if (gameInput.length() != 9) {
@@ -38,16 +45,56 @@ public class Main {
         conditions[6] = String.valueOf(gameInput.charAt(0)) + gameInput.charAt(4) + gameInput.charAt(8);
         conditions[7] = String.valueOf(gameInput.charAt(6)) + gameInput.charAt(4) + gameInput.charAt(2);
 
-        int XWins;
-        int XInputs;
-        int OWins;
-        int OInputs;
-        int emptyInputs;
+        int XWins = 0;
+        int OWins = 0;
 
+        // check win conditions
         for (String line : conditions) {
-            // check win conditions
+            switch (line) {
+                case "XXX":
+                    XWins++;
+                    break;
+                case "OOO":
+                    OWins++;
+                    break;
+            }
+        }
 
-            // check inputs
+        int XInputs = 0;
+        int OInputs = 0;
+        int emptyInputs = 0;
+
+        // check inputs
+        for (char c : gameInput.toCharArray()) {
+            switch (c) {
+                case 'X':
+                    XInputs++;
+                    break;
+                case 'O':
+                    OInputs++;
+                    break;
+                default:
+                    emptyInputs++;
+            }
+        }
+
+        System.out.println("XWins: " + XWins);
+        System.out.println("OWins: " + OWins);
+        System.out.println("XInputs: " + XInputs);
+        System.out.println("OInputs: " + OInputs);
+        System.out.println("emptyInputs: " + emptyInputs);
+
+        // Analyze game state
+        if (XWins + OWins > 1 || Math.abs(XInputs - OInputs) > 1) {
+            System.out.println("Impossible");
+        } else if (XWins == 1) {
+            System.out.println("X wins");
+        } else if (OWins == 1) {
+            System.out.println("O wins");
+        } else if (emptyInputs > 0) {
+            System.out.println("Game not finished");
+        } else {
+            System.out.println("Draw");
         }
 
 
